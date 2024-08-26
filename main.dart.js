@@ -72299,7 +72299,7 @@ $1(a){return B.z},
 $S:8}
 A.acb.prototype={
 $0(){var s=document.createElement("a")
-s.href="https://rommellagurin.online:8114/cv"
+s.href="https://drive.google.com/uc?export=download&id=1YQm2E219ewy640XM3Oe3kvrxhqSuTwWc"
 s.download="Rommel_lagurin_CV"
 s.click()},
 $S:0}
