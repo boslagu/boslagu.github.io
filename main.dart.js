@@ -72250,10 +72250,10 @@ s.glx(0)
 return new A.wf(new A.a2G(),null)}}
 A.a2G.prototype={
 $2(a,b){var s=A.aoQ(null,A.awa(B.ab,B.qv),!0)
-return new A.mW($.auI(),"/profile",new A.a2E(),new A.a2F(),"Rommel Lagurin",s,!1,null)},
+return new A.mW($.auI(),"/",new A.a2E(),new A.a2F(),"Rommel Lagurin",s,!1,null)},
 $S:425}
 A.a2E.prototype={
-$1(a){if(a.a==="/profile")return A.a1E(new A.a2C(),a,t.z)
+$1(a){if(a.a==="/")return A.a1E(new A.a2C(),a,t.z)
 return A.a1E(new A.a2D(),null,t.z)},
 $S:153}
 A.a2C.prototype={
@@ -79663,7 +79663,7 @@ r($,"aI2","asy",()=>A.b9(new A.a0k(),A.bL(4.5,7,11,21),!1,"on_tertiary_fixed",ne
 r($,"aI3","asz",()=>A.b9(new A.a0g(),A.bL(3,4.5,7,11),!1,"on_tertiary_fixed_variant",new A.a0h(),new A.a0i(),new A.a0j(),null))
 s($,"aJt","atf",()=>$.Ca())
 s($,"aJs","Ca",()=>A.ajq(50))
-r($,"aLI","auI",()=>A.aR(["/profile",new A.ah7(),"/notFound",new A.ah8()],t.N,A.af("j(aa)")))
+r($,"aLI","auI",()=>A.aR(["/",new A.ah7(),"/notFound",new A.ah8()],t.N,A.af("j(aa)")))
 s($,"aIy","akN",()=>new A.D())
 r($,"az3","asL",()=>{var q=new A.a1X()
 q.Ec($.akN())
