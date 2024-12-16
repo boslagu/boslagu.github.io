@@ -1,0 +1,7 @@
+[submodule "resorts"]
+  path = profile
+  url = https://github.com/boslagu/resorts.git
+
+[submodule "profile"]
+  path = company
+  url = https://github.com/boslagu/profile.git
