@@ -1,0 +1,496 @@
+{
+  "resorts": [
+    {
+      "title": "Cocoons (at Club Laiya)",
+      "imageUrl": "assets/images/resort.jpg",
+      "rating": 4,
+      "location": {
+        "address": "Club Laiya, Brgy, San Juan, Batangas",
+        "phone": "0999 225 3333"
+      },
+      "price": 3500,
+      "description": "A serene getaway with luxurious amenities.",
+      "galleryImages": [
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg",
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 13.67300979756114,
+        "longitude": 121.39471837526793
+      },
+      "capacity": {
+        "totalCapacity": 1250,
+        "availableCapacity": 800,
+        "currentCapacity": 450
+      },
+      "status": "Open",
+      "visitors": {
+        "adults": {
+          "male": 200,
+          "female": 150
+        },
+        "kids": {
+          "male": 50,
+          "female": 50
+        }
+      }
+    },
+    {
+      "title": "Palm Beach Resort",
+      "imageUrl": "assets/images/resort2.jpg",
+      "rating": 5,
+      "location": {
+        "address": "Laiya Road, San Juan, 4226 Batangas",
+        "phone": "(02) 8850 9544"
+      },
+      "price": 5640,
+      "description": "Experience the best of nature in a cozy resort.",
+      "galleryImages": [
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg",
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 14.029652912277623,
+        "longitude": 121.38838335998837
+      },
+      "capacity": {
+        "totalCapacity": 1640,
+        "availableCapacity": 1200,
+        "currentCapacity": 440
+      },
+      "status": "Open",
+      "visitors": {
+        "adults": {
+          "male": 180,
+          "female": 120
+        },
+        "kids": {
+          "male": 70,
+          "female": 70
+        }
+      }
+    },
+    {
+      "title": "La Luz Beach Resort",
+      "imageUrl": "assets/images/resort3.jpg",
+      "rating": 5,
+      "location": {
+        "address": "M96C+VXX, San Juan, Batangas, 4226 Batangas",
+        "phone": "0998 338 7111"
+      },
+      "price": 7045,
+      "description": "A serene getaway with luxurious amenities.",
+      "galleryImages": [
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg",
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 13.673153282420282,
+        "longitude": 121.39460586755473
+      },
+      "capacity": {
+        "totalCapacity": 1890,
+        "availableCapacity": 1300,
+        "currentCapacity": 590
+      },
+      "status": "Open",
+      "visitors": {
+        "adults": {
+          "male": 250,
+          "female": 250
+        },
+        "kids": {
+          "male": 40,
+          "female": 50
+        }
+      }
+    },
+    {
+      "title": "El Jardin de Zaida",
+      "imageUrl": "assets/images/resort4.jpg",
+      "rating": 3,
+      "location": {
+        "address": "M96C+VXX, San Juan, Batangas, 4226 Batangas",
+        "phone": "0998 338 7111"
+      },
+      "price": 5065,
+      "description": "A serene getaway with luxurious amenities.",
+      "galleryImages": [
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg",
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 13.673153282420282,
+        "longitude": 121.39460586755473
+      },
+      "capacity": {
+        "totalCapacity": 2350,
+        "availableCapacity": 1850,
+        "currentCapacity": 500
+      },
+      "status": "Open",
+      "visitors": {
+        "adults": {
+          "male": 210,
+          "female": 150
+        },
+        "kids": {
+          "male": 70,
+          "female": 70
+        }
+      }
+    },
+    {
+      "title": "Paseo Verde Beach Resort",
+      "imageUrl": "assets/images/resort5.jpg",
+      "rating": 3,
+      "location": {
+        "address": "M96C+VXX, San Juan, Batangas, 4226 Batangas",
+        "phone": "0998 338 7111"
+      },
+      "price": 11200,
+      "description": "A serene getaway with luxurious amenities.",
+      "galleryImages": [
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg",
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 13.673153282420282,
+        "longitude": 121.39460586755473
+      },
+      "capacity": {
+        "totalCapacity": 1750,
+        "availableCapacity": 1100,
+        "currentCapacity": 650
+      },
+      "status": "Open",
+      "visitors": {
+        "adults": {
+          "male": 300,
+          "female": 200
+        },
+        "kids": {
+          "male": 50,
+          "female": 100
+        }
+      }
+    },
+    {
+      "title": "Casa Virginia",
+      "imageUrl": "assets/images/resort6.jpg",
+      "rating": 4,
+      "location": {
+        "address": "Club Laiya, Brgy, San Juan, Batangas",
+        "phone": "0999 225 3333"
+      },
+      "price": 9000,
+      "description": "A serene getaway with luxurious amenities.",
+      "galleryImages": [
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg",
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 13.67300979756114,
+        "longitude": 121.39471837526793
+      },
+      "capacity": {
+        "totalCapacity": 1980,
+        "availableCapacity": 1300,
+        "currentCapacity": 680
+      },
+      "status": "Open",
+      "visitors": {
+        "adults": {
+          "male": 210,
+          "female": 150
+        },
+        "kids": {
+          "male": 70,
+          "female": 70
+        }
+      }
+    },
+    {
+      "title": "Blue Coral Beach Resort",
+      "imageUrl": "assets/images/resort7.jpg",
+      "rating": 2,
+      "location": {
+        "address": "M96C+VXX, San Juan, Batangas",
+        "phone": "0998 338 7111"
+      },
+      "price": 4780,
+      "description": "Experience a unique stay in a bamboo house near the beach.",
+      "galleryImages": [
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg",
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 13.673153282420282,
+        "longitude": 121.39460586755473
+      },
+      "capacity": {
+        "totalCapacity": 1000,
+        "availableCapacity": 700,
+        "currentCapacity": 300
+      },
+      "status": "Open",
+      "visitors": {
+        "adults": {
+          "male": 150,
+          "female": 100
+        },
+        "kids": {
+          "male": 40,
+          "female": 30
+        }
+      }
+    },
+    {
+      "title": "Casa Amara",
+      "imageUrl": "assets/images/resort8.jpg",
+      "rating": 4,
+      "location": {
+        "address": "M96C+VXX, San Juan, Batangas, 4226 Batangas",
+        "phone": "0998 338 7111"
+      },
+      "price": 3807,
+      "description": "A cozy spot for family gatherings and relaxation.",
+      "galleryImages": [
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg",
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 13.673153282420282,
+        "longitude": 121.39460586755473
+      },
+      "capacity": {
+        "totalCapacity": 1400,
+        "availableCapacity": 1400,
+        "currentCapacity": 0
+      },
+      "status": "Closed",
+      "visitors": {
+        "adults": {
+          "male": 0,
+          "female": 0
+        },
+        "kids": {
+          "male": 0,
+          "female": 0
+        }
+      }
+    },
+    {
+      "title": "Acuaverde Beach Resort",
+      "imageUrl": "assets/images/resort3.jpg",
+      "rating": 4,
+      "location": {
+        "address": "M96C+VXX, San Juan, Batangas, 4226 Batangas",
+        "phone": "0998 338 7111"
+      },
+      "price": 10807,
+      "description": "A cozy spot for family gatherings and relaxation.",
+      "galleryImages": [
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg",
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 13.673153282420282,
+        "longitude": 121.39460586755473
+      },
+      "capacity": {
+        "totalCapacity": 1400,
+        "availableCapacity": 900,
+        "currentCapacity": 500
+      },
+      "status": "Open",
+      "visitors": {
+        "adults": {
+          "male": 180,
+          "female": 120
+        },
+        "kids": {
+          "male": 50,
+          "female": 50
+        }
+      }
+    },
+    {
+      "title": "Cala Laiya",
+      "imageUrl": "assets/images/resort.jpg",
+      "rating": 4,
+      "location": {
+        "address": "M96C+VXX, San Juan, Batangas, 4226 Batangas",
+        "phone": "0998 338 7111"
+      },
+      "price": 7800,
+      "description": "A cozy spot for family gatherings and relaxation.",
+      "galleryImages": [
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg",
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 13.673153282420282,
+        "longitude": 121.39460586755473
+      },
+      "capacity": {
+        "totalCapacity": 1400,
+        "availableCapacity": 1400,
+        "currentCapacity": 0
+      },
+      "status": "Closed",
+      "visitors": {
+        "adults": {
+          "male": 0,
+          "female": 0
+        },
+        "kids": {
+          "male": 0,
+          "female": 0
+        }
+      }
+    },
+    {
+      "title": "Virgin Beach Resort Laiya",
+      "imageUrl": "assets/images/resort8.jpg",
+      "rating": 4,
+      "location": {
+        "address": "M96C+VXX, San Juan, Batangas, 4226 Batangas",
+        "phone": "0998 338 7111"
+      },
+      "price": 3807,
+      "description": "A cozy spot for family gatherings and relaxation.",
+      "galleryImages": [
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg",
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 13.673153282420282,
+        "longitude": 121.39460586755473
+      },
+      "capacity": {
+        "totalCapacity": 1400,
+        "availableCapacity": 900,
+        "currentCapacity": 500
+      },
+      "status": "Open",
+      "visitors": {
+        "adults": {
+          "male": 180,
+          "female": 120
+        },
+        "kids": {
+          "male": 50,
+          "female": 50
+        }
+      }
+    },
+    {
+      "title": "Klub Keluarga Resort",
+      "imageUrl": "assets/images/resort5.jpg",
+      "rating": 4,
+      "location": {
+        "address": "M96C+VXX, San Juan, Batangas, 4226 Batangas",
+        "phone": "0998 338 7111"
+      },
+      "price": 13807,
+      "description": "A cozy spot for family gatherings and relaxation.",
+      "galleryImages": [
+        "assets/images/coccoons1.jpg",
+        "assets/images/coccoons2.jpg",
+        "assets/images/coccoons3.jpg",
+        "assets/images/coccoons4.jpg",
+        "assets/images/cala1.jpg",
+        "assets/images/cala2.jpg",
+        "assets/images/cala3.jpg",
+        "assets/images/cala4.jpg"
+      ],
+      "destinationCoordinates": {
+        "latitude": 13.673153282420282,
+        "longitude": 121.39460586755473
+      },
+      "capacity": {
+        "totalCapacity": 1400,
+        "availableCapacity": 1400,
+        "currentCapacity": 0
+      },
+      "status": "Closed",
+      "visitors": {
+        "adults": {
+          "male": 0,
+          "female": 0
+        },
+        "kids": {
+          "male": 0,
+          "female": 0
+        }
+      }
+    }
+  ]
+}

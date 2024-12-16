@@ -1,0 +1,243 @@
+[
+  {
+    "status": "Active",
+    "bio": {
+      "firstname": "John",
+      "middlename": "Michael",
+      "lastname": "Doe",
+      "sex": "Male",
+      "birthdate": "1990-05-15"
+    },
+    "company": {
+      "title": "Tech Solutions Inc.",
+      "description": "A leading tech solutions provider specializing in software development and IT consulting.",
+      "business": "Information Technology",
+      "street": "123 Innovation Ave",
+      "brgy": "Central",
+      "city": "Metro City",
+      "province": "Techland"
+    },
+    "role": {
+      "title": "Super Admin",
+      "description": "Developers with full access to all system features.",
+      "access": [
+        { "feature": "Dashboard", "accessType": ["ADD", "EDIT", "VIEW", "DELETE"] },
+        { "feature": "Check-in", "accessType": ["ADD", "EDIT", "VIEW", "DELETE"] },
+        { "feature": "Resorts", "accessType": ["ADD", "EDIT", "VIEW", "DELETE"] },
+        { "feature": "Users", "accessType": ["ADD", "EDIT", "VIEW", "DELETE"] },
+        { "feature": "Reports", "accessType": ["VIEW"] },
+        { "feature": "Profile", "accessType": ["EDIT", "VIEW"] },
+        { "feature": "Roles", "accessType": ["ADD", "EDIT", "VIEW", "DELETE"] }
+      ]
+    },
+    "address": [
+      {
+        "houseNo": "221B",
+        "purok": "3",
+        "street": "Baker Street",
+        "subdivision": "Downtown Residences",
+        "brgy": "Westside",
+        "city": "Metro City",
+        "province": "Techland"
+      }
+    ],
+    "contact": [
+      { "contactType": "Phone", "contactDetails": "123-456-7890", "prioritization": "Primary" },
+      { "contactType": "Email", "contactDetails": "john.doe@example.com", "prioritization": "Primary" }
+    ],
+    "registrationDate": "11/01/2024",
+    "password": "Password123#"
+  },
+  {
+    "status": "Pending",
+    "bio": {
+      "firstname": "Jane",
+      "middlename": "Alice",
+      "lastname": "Smith",
+      "sex": "Female",
+      "birthdate": "1985-07-22"
+    },
+    "company": {
+      "title": "Green Energy Corp.",
+      "description": "Dedicated to providing sustainable energy solutions.",
+      "business": "Renewable Energy",
+      "street": "456 Solar Blvd",
+      "brgy": "Eastside",
+      "city": "Eco City",
+      "province": "Greenland"
+    },
+    "role": {
+      "title": "Municipality Admin",
+      "description": "Municipality admins responsible for overseeing municipal operations.",
+      "access": [
+        { "feature": "Dashboard", "accessType": ["VIEW"] },
+        { "feature": "Check-in", "accessType": ["VIEW"] },
+        { "feature": "Resorts", "accessType": ["VIEW"] },
+        { "feature": "Users", "accessType": ["EDIT", "VIEW"] },
+        { "feature": "Reports", "accessType": ["VIEW"] },
+        { "feature": "Profile", "accessType": ["EDIT", "VIEW"] }
+      ]
+    },
+    "address": [
+      {
+        "houseNo": "10",
+        "purok": "1",
+        "street": "Maple Avenue",
+        "subdivision": "Greenfields",
+        "brgy": "Northtown",
+        "city": "Eco City",
+        "province": "Greenland"
+      }
+    ],
+    "contact": [
+      { "contactType": "Phone", "contactDetails": "234-567-8901", "prioritization": "Primary" },
+      { "contactType": "Email", "contactDetails": "jane.smith@greenenergy.com", "prioritization": "Primary" }
+    ],
+    "registrationDate": "02/15/2024",
+    "password": "Password456#"
+  },
+  {
+    "status": "Active",
+    "bio": {
+      "firstname": "Carlos",
+      "middlename": "Antonio",
+      "lastname": "Garcia",
+      "sex": "Male",
+      "birthdate": "1992-11-30"
+    },
+    "company": {
+      "title": "Resort Management Ltd.",
+      "description": "Managing resort properties and providing excellent customer services.",
+      "business": "Hospitality",
+      "street": "789 Ocean Drive",
+      "brgy": "Beachfront",
+      "city": "Coastal City",
+      "province": "Beachland"
+    },
+    "role": {
+      "title": "Resort Admin",
+      "description": "Admin and owners of resorts with full access to resort operations.",
+      "access": [
+        { "feature": "Dashboard", "accessType": ["VIEW"] },
+        { "feature": "Check-in", "accessType": ["ADD", "EDIT", "VIEW"] },
+        { "feature": "Resorts", "accessType": ["ADD", "EDIT", "VIEW", "DELETE"] },
+        { "feature": "Users", "accessType": ["VIEW"] },
+        { "feature": "Reports", "accessType": ["VIEW"] },
+        { "feature": "Profile", "accessType": ["EDIT", "VIEW"] }
+      ]
+    },
+    "address": [
+      {
+        "houseNo": "15",
+        "purok": "5",
+        "street": "Lagoon Street",
+        "subdivision": "Seaside Villa",
+        "brgy": "Bayview",
+        "city": "Coastal City",
+        "province": "Beachland"
+      }
+    ],
+    "contact": [
+      { "contactType": "Phone", "contactDetails": "345-678-9012", "prioritization": "Primary" },
+      { "contactType": "Email", "contactDetails": "carlos.garcia@resortmanagement.com", "prioritization": "Primary" }
+    ],
+    "registrationDate": "03/22/2024",
+    "password": "Password789#"
+  },
+  {
+    "status": "Active",
+    "bio": {
+      "firstname": "Emma",
+      "middlename": "Grace",
+      "lastname": "Johnson",
+      "sex": "Female",
+      "birthdate": "1988-02-17"
+    },
+    "company": {
+      "title": "Oceanic Resorts",
+      "description": "A chain of luxury resorts offering exceptional beachside experiences.",
+      "business": "Hospitality",
+      "street": "102 Palm Grove",
+      "brgy": "Seaside",
+      "city": "Sunny Beach",
+      "province": "Sunshine Coast"
+    },
+    "role": {
+      "title": "Resort Staff",
+      "description": "Staff working in resort facilities and guest services.",
+      "access": [
+        { "feature": "Dashboard", "accessType": ["VIEW"] },
+        { "feature": "Check-in", "accessType": ["VIEW"] },
+        { "feature": "Resorts", "accessType": ["VIEW"] },
+        { "feature": "Users", "accessType": ["VIEW"] },
+        { "feature": "Reports", "accessType": ["VIEW"] },
+        { "feature": "Profile", "accessType": ["EDIT", "VIEW"] }
+      ]
+    },
+    "address": [
+      {
+        "houseNo": "200",
+        "purok": "9",
+        "street": "Coconut Road",
+        "subdivision": "Island View",
+        "brgy": "Beachfront",
+        "city": "Sunny Beach",
+        "province": "Sunshine Coast"
+      }
+    ],
+    "contact": [
+      { "contactType": "Phone", "contactDetails": "456-789-0123", "prioritization": "Primary" },
+      { "contactType": "Email", "contactDetails": "emma.johnson@oceanicresorts.com", "prioritization": "Primary" }
+    ],
+    "registrationDate": "04/30/2024",
+    "password": "Password101#"
+  },
+  {
+    "status": "Inactive",
+    "bio": {
+      "firstname": "James",
+      "middlename": "Lee",
+      "lastname": "Brown",
+      "sex": "Male",
+      "birthdate": "1995-09-10"
+    },
+    "company": {
+      "title": "Tech Innovators",
+      "description": "Specializing in innovative technology solutions for businesses.",
+      "business": "Technology",
+      "street": "121 Innovation Park",
+      "brgy": "East District",
+      "city": "Innovation City",
+      "province": "Techland"
+    },
+    "role": {
+      "title": "Municipality Staff",
+      "description": "Staff supporting municipal activities and operations.",
+      "access": [
+        { "feature": "Dashboard", "accessType": ["VIEW"] },
+        { "feature": "Check-in", "accessType": ["VIEW"] },
+        { "feature": "Resorts", "accessType": ["VIEW"] },
+        { "feature": "Users", "accessType": ["VIEW"] },
+        { "feature": "Reports", "accessType": ["VIEW"] },
+        { "feature": "Profile", "accessType": ["EDIT", "VIEW"] }
+      ]
+    },
+    "address": [
+      {
+        "houseNo": "38",
+        "purok": "7",
+        "street": "Tech Avenue",
+        "subdivision": "Tech Park",
+        "brgy": "East District",
+        "city": "Innovation City",
+        "province": "Techland"
+      }
+    ],
+    "contact": [
+      { "contactType": "Phone", "contactDetails": "567-890-1234", "prioritization": "Primary" },
+      { "contactType": "Email", "contactDetails": "james.brown@techinnovators.com", "prioritization": "Primary" }
+    ],
+    "registrationDate": "05/25/2024",
+    "password": "Password202#"
+  }
+]
