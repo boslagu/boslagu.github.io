@@ -432,7 +432,7 @@ import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/fir
                     contactForm.reset();
                 })
                 .catch((error) => {
-                    console.error('Failed to save message:', error);
+                    console.error('Firestore write failed:', error.code, '-', error.message);
                     let hint = 'Please try again or email me directly.';
                     if (error.code === 'permission-denied') {
                         hint = 'Check your Firestore Security Rules and database setup.';

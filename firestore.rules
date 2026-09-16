@@ -20,7 +20,8 @@ service cloud.firestore {
         request.resource.data.os.size() <= 50 &&
         request.resource.data.deviceId is string &&
         request.resource.data.deviceId.size() == 36 &&
-        request.resource.data.createdAt == request.time;
+        request.resource.data.createdAt is timestamp &&
+        request.resource.data.createdAt <= request.time + duration.value(60, 's');
 
       // Only authenticated users (the site owner) may read/list messages.
       allow read, list: if request.auth != null;
