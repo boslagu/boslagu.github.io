@@ -1,7 +1,10 @@
 /**
  * Portfolio Main JavaScript
- * Handles navigation, smooth scrolling, project rendering, and filtering
+ * Handles navigation, smooth scrolling, project rendering, and contact form
  */
+
+import { db } from './firebase-config.js';
+import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 (function () {
     'use strict';
@@ -143,6 +146,42 @@
     const lockIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
 
     const externalLinkIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
+
+    // ============================================
+    // Device Fingerprinting
+    // ============================================
+    function getDeviceId() {
+        const key = 'boslagu_device_id';
+        let id = localStorage.getItem(key);
+        if (!id) {
+            id = crypto.randomUUID();
+            localStorage.setItem(key, id);
+        }
+        return id;
+    }
+
+    function getBrowser() {
+        const ua = navigator.userAgent;
+        if (ua.includes('Firefox/')) return 'Firefox ' + (ua.split('Firefox/')[1] || '').split(' ')[0];
+        if (ua.includes('Edg/'))   return 'Edge ' + (ua.split('Edg/')[1] || '').split(' ')[0];
+        if (ua.includes('OPR/'))   return 'Opera ' + (ua.split('OPR/')[1] || '').split(' ')[0];
+        if (ua.includes('Chrome/')) return 'Chrome ' + (ua.split('Chrome/')[1] || '').split(' ')[0];
+        if (ua.includes('Safari/') && ua.includes('Version/')) {
+            return 'Safari ' + (ua.split('Version/')[1] || '').split(' ')[0];
+        }
+        return 'Unknown';
+    }
+
+    function getOS() {
+        const ua = navigator.userAgent;
+        if (ua.includes('Windows NT 10')) return 'Windows 10+';
+        if (ua.includes('Windows NT 6'))  return 'Windows 7/8';
+        if (ua.includes('Mac OS X'))      return 'macOS ' + (ua.split('Mac OS X ')[1] || '').split(';')[0].replace(/_/g, '.');
+        if (ua.includes('Android'))       return 'Android ' + (ua.split('Android ')[1] || '').split(';')[0];
+        if (ua.includes('iPhone') || ua.includes('iPad')) return 'iOS ' + (ua.split('OS ')[1] || '').split(' ')[0].replace(/_/g, '.');
+        if (ua.includes('Linux'))         return 'Linux';
+        return 'Unknown';
+    }
 
     // ============================================
     // DOM Elements
@@ -345,9 +384,9 @@
     // ============================================
     // Contact Form Handling
     // ============================================
-    // Set this to your deployed Google Apps Script Web App URL
-    // See SETUP.md for step-by-step instructions.
-    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE'; // e.g. https://script.google.com/macros/s/xxxxxxxx/exec
+    // Writes submissions to Cloud Firestore.
+    // Write access is enforced by the Firestore Security Rules in
+    // `firestore.rules` at the root of this repository.
 
     if (contactForm) {
         contactForm.addEventListener('submit', function (e) {
@@ -357,6 +396,11 @@
             const name = formData.get('name');
             const email = formData.get('email');
             const message = formData.get('message');
+
+            if (formData.get('website')) {
+                showNotification('Submission blocked.', 'error');
+                return;
+            }
 
             if (!name || !email || !message) {
                 showNotification('Please fill in all fields', 'error');
@@ -373,25 +417,31 @@
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
 
-            if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-                showNotification('Contact form is not configured yet. Set APPS_SCRIPT_URL in js/main.js.', 'error');
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-                return;
-            }
-
-            fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ name: name, email: email, message: message })
+            addDoc(collection(db, 'messages'), {
+                name: name.trim(),
+                email: email.trim().toLowerCase(),
+                message: message.trim(),
+                browser: getBrowser(),
+                os: getOS(),
+                deviceId: getDeviceId(),
+                createdAt: serverTimestamp(),
+                source: 'portfolio-contact-form'
             })
                 .then(() => {
                     showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
                     contactForm.reset();
                 })
-                .catch(() => {
-                    showNotification('Something went wrong. Please try again or email me directly.', 'error');
+                .catch((error) => {
+                    console.error('Failed to save message:', error);
+                    let hint = 'Please try again or email me directly.';
+                    if (error.code === 'permission-denied') {
+                        hint = 'Check your Firestore Security Rules and database setup.';
+                    } else if (error.code === 'unavailable' || error.code === 'network-error') {
+                        hint = 'Check your connection and the Firebase config in js/firebase-config.js.';
+                    } else if (error.code === 'invalid-argument') {
+                        hint = 'Submission failed validation. Check the form fields.';
+                    }
+                    showNotification('Something went wrong. ' + hint, 'error');
                 })
                 .finally(() => {
                     submitBtn.textContent = originalText;

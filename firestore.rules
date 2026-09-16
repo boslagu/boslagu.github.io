@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /messages/{messageId} {
+      // Anyone may submit a contact message, but only with validated fields.
+      // Documents with any field outside this exact whitelist are rejected.
+      allow create: if
+        request.resource.data.keys().hasOnly(['name', 'email', 'message', 'browser', 'os', 'deviceId', 'createdAt', 'source']) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() > 0 &&
+        request.resource.data.name.size() <= 100 &&
+        request.resource.data.email is string &&
+        request.resource.data.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$') &&
+        request.resource.data.message is string &&
+        request.resource.data.message.size() > 0 &&
+        request.resource.data.message.size() <= 2000 &&
+        request.resource.data.browser is string &&
+        request.resource.data.browser.size() <= 50 &&
+        request.resource.data.os is string &&
+        request.resource.data.os.size() <= 50 &&
+        request.resource.data.deviceId is string &&
+        request.resource.data.deviceId.size() == 36 &&
+        request.resource.data.createdAt == request.time;
+
+      // Only authenticated users (the site owner) may read/list messages.
+      allow read, list: if request.auth != null;
+      // Messages are immutable - no updates or deletes from clients.
+      allow update, delete: if false;
+    }
+  }
+}

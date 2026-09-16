@@ -966,9 +966,20 @@ ul, ol {
 }
 
 .contact-form {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
+}
+
+.form-honeypot {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    opacity: 0;
 }
 
 .form-group {
