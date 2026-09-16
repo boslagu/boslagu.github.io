@@ -4,7 +4,16 @@
  */
 
 import { db } from './firebase-config.js';
-import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+import {
+    collection,
+    addDoc,
+    doc,
+    getDoc,
+    setDoc,
+    updateDoc,
+    onSnapshot,
+    serverTimestamp
+} from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 (function () {
     'use strict';
@@ -150,14 +159,23 @@ import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/fir
     // ============================================
     // Device Fingerprinting
     // ============================================
+    const DEVICE_ID_KEY = 'boslagu_device_id';
+
+    // The stored id is the visitor's capability token (an unguessable UUID).
+    // It is only created on first "Continue", so an empty key means a brand-new
+    // visitor who must first give their name/email in the start form.
     function getDeviceId() {
-        const key = 'boslagu_device_id';
-        let id = localStorage.getItem(key);
-        if (!id) {
-            id = crypto.randomUUID();
-            localStorage.setItem(key, id);
-        }
+        return localStorage.getItem(DEVICE_ID_KEY) || null;
+    }
+
+    function createDeviceId() {
+        const id = crypto.randomUUID();
+        localStorage.setItem(DEVICE_ID_KEY, id);
         return id;
+    }
+
+    function clearDeviceId() {
+        localStorage.removeItem(DEVICE_ID_KEY);
     }
 
     function getBrowser() {
@@ -191,7 +209,6 @@ import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/fir
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('.section, .hero');
-    const contactForm = document.getElementById('contact-form');
     const projectsGrid = document.getElementById('projects-grid');
     const projectFilters = document.getElementById('project-filters');
 
@@ -356,6 +373,8 @@ import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/fir
     // ============================================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
+            if (this.id === 'contact-chat') return;
+
             const targetId = this.getAttribute('href');
 
             // Scroll to top for plain "#" links (e.g. logo)
@@ -382,73 +401,387 @@ import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/fir
     });
 
     // ============================================
-    // Contact Form Handling
+    // Chat Widget
     // ============================================
-    // Writes submissions to Cloud Firestore.
-    // Write access is enforced by the Firestore Security Rules in
-    // `firestore.rules` at the root of this repository.
+    // Replaces the old contact form. Each visitor gets a private thread keyed
+    // by their deviceId. Access is enforced by the Firestore Security Rules in
+    // `firestore.rules`.
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
+    const chatWidget = document.getElementById('chat-widget');
+    const chatLauncher = document.getElementById('chat-launcher');
+    const chatBadge = document.getElementById('chat-badge');
+    const chatClose = document.getElementById('chat-close');
+    const chatStart = document.getElementById('chat-start');
+    const chatStartBtn = document.getElementById('chat-start-btn');
+    const chatName = document.getElementById('chat-name');
+    const chatEmail = document.getElementById('chat-email');
+    const chatLoading = document.getElementById('chat-loading');
+    const chatPanel = document.getElementById('chat-panel');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInputForm = document.getElementById('chat-input-form');
+    const chatInput = document.getElementById('chat-input');
+
+    let chatUnsubscribe = null;
+    let chatPinnedToBottom = true;
+    let currentChatDeviceId = null;
+    let chatVisitorReadAt = null;
+
+    function setLauncherBadge(count) {
+        if (!chatBadge) return;
+        chatBadge.textContent = count > 99 ? '99+' : String(count);
+        chatBadge.hidden = count <= 0;
+    }
+
+    function markVisitorRead(deviceId) {
+        chatVisitorReadAt = new Date();
+        setLauncherBadge(0);
+        updateDoc(doc(db, 'conversations', deviceId), { visitorReadAt: serverTimestamp() })
+            .catch((error) => {
+                console.error('Failed to mark conversation read:', error.code, '-', error.message);
+            });
+    }
+
+    function scrollChatToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        chatPinnedToBottom = true;
+    }
+
+    function openChat() {
+        chatWidget.hidden = false;
+        chatLauncher.setAttribute('aria-expanded', 'true');
+        if (currentChatDeviceId && !chatPanel.hidden) {
+            markVisitorRead(currentChatDeviceId);
+        }
+        if (!chatPanel.hidden && chatInput) {
+            chatInput.focus();
+        }
+        if (chatMessages.children.length) {
+            scrollChatToBottom();
+        }
+    }
+
+    function closeChat() {
+        chatWidget.hidden = true;
+        chatLauncher.setAttribute('aria-expanded', 'false');
+    }
+
+    function toggleChat() {
+        if (chatWidget.hidden) {
+            openChat();
+        } else {
+            closeChat();
+        }
+    }
+
+    if (chatLauncher) {
+        chatLauncher.addEventListener('click', toggleChat);
+    }
+
+    const contactChat = document.getElementById('contact-chat');
+
+    if (contactChat) {
+        contactChat.addEventListener('click', (e) => {
+            e.preventDefault();
+            openChat();
+            chatWidget.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    }
+
+    if (chatClose) {
+        chatClose.addEventListener('click', closeChat);
+    }
+
+    function showChatStart() {
+        chatLoading.hidden = true;
+        chatPanel.hidden = true;
+        chatStart.hidden = false;
+    }
+
+    function showChatThread() {
+        chatLoading.hidden = true;
+        chatStart.hidden = true;
+        chatPanel.hidden = false;
+    }
+
+    function renderTextDivider(text) {
+        const divider = document.createElement('div');
+        divider.className = 'chat-date-divider';
+        divider.textContent = text;
+        return divider;
+    }
+
+    // Pulls ALL messages at once and renders them oldest-first, grouped by
+    // date with one divider per day. Every message is sorted by its timestamp
+    // on the client, so the first message is always at the top and the last
+    // message - including anything just written - lands at the bottom.
+    // Documents without a usable createdAt are sorted to the very top under
+    // the "Earlier" divider instead of being dropped.
+    function renderAllMessages(snapshot) {
+        const oldScrollHeight = chatMessages.scrollHeight;
+        const oldScrollTop = chatMessages.scrollTop;
+        const wasPinned = chatMessages.scrollHeight - chatMessages.scrollTop - chatMessages.clientHeight < 60;
+
+        const messages = [];
+        snapshot.forEach(docSnap => {
+            const data = docSnap.data();
+            if (!data.text) return;
+
+            const when = toDate(data.createdAt);
+            messages.push({
+                text: data.text,
+                role: data.role,
+                when: when,
+                timeMs: when ? when.getTime() : -Infinity
+            });
+        });
+
+        messages.sort((a, b) => a.timeMs - b.timeMs);
+
+        // Unread badge: count owner replies newer than the visitor's last read
+        // marker. While the chat is open, new owner replies are read immediately
+        // so the badge clears on its own.
+        let unreadCount = 0;
+        let latestUnread = null;
+        messages.forEach(msg => {
+            if (msg.role === 'owner' && msg.when && chatVisitorReadAt && msg.when > chatVisitorReadAt) {
+                unreadCount++;
+                if (!latestUnread || msg.when > latestUnread) {
+                    latestUnread = msg.when;
+                }
+            }
+        });
+
+        if (unreadCount > 0 && currentChatDeviceId && !chatWidget.hidden && !chatPanel.hidden) {
+            chatVisitorReadAt = latestUnread;
+            setLauncherBadge(0);
+            updateDoc(doc(db, 'conversations', currentChatDeviceId), { visitorReadAt: latestUnread })
+                .catch((error) => {
+                    console.error('Failed to mark conversation read:', error.code, '-', error.message);
+                });
+        } else {
+            setLauncherBadge(unreadCount);
+        }
+
+        chatMessages.innerHTML = '';
+        chatPinnedToBottom = true;
+
+        let lastKey = null;
+        messages.forEach(msg => {
+            const key = msg.when ? formatDateKey(msg.when) : '';
+            if (key !== lastKey) {
+                chatMessages.appendChild(msg.when ? renderDateDivider(msg.when) : renderTextDivider('Earlier'));
+                lastKey = key;
+            }
+            chatMessages.appendChild(renderChatMessage(msg.text, msg.role === 'owner', msg.when));
+        });
+
+        if (wasPinned) {
+            scrollChatToBottom();
+        } else {
+            chatPinnedToBottom = false;
+            chatMessages.scrollTop = oldScrollTop + (chatMessages.scrollHeight - oldScrollHeight);
+        }
+    }
+
+    function attachChatListener(deviceId) {
+        if (chatUnsubscribe) {
+            chatUnsubscribe();
+        }
+
+        chatUnsubscribe = onSnapshot(
+            collection(db, 'conversations', deviceId, 'messages'),
+            (snapshot) => renderAllMessages(snapshot),
+            (error) => {
+                console.error('Chat listener failed:', error.code, '-', error.message);
+                showNotification('Could not load the conversation. Refresh and try again.', 'error');
+            }
+        );
+    }
+
+    function openChatThread(deviceId, visitorReadAt) {
+        currentChatDeviceId = deviceId;
+        chatVisitorReadAt = visitorReadAt || null;
+        chatMessages.querySelectorAll('.chat-bubble, .chat-date-divider').forEach(el => el.remove());
+        chatPinnedToBottom = true;
+        attachChatListener(deviceId);
+    }
+
+    // A returning visitor (existing deviceId) has their conversation pulled
+    // automatically. Brand-new visitors (no deviceId) start from the form.
+    function initChat() {
+        const deviceId = getDeviceId();
+        if (!deviceId) {
+            showChatStart();
+            return;
+        }
+
+        chatStart.hidden = true;
+        chatPanel.hidden = true;
+        chatLoading.hidden = false;
+
+        getDoc(doc(db, 'conversations', deviceId))
+            .then((snap) => {
+                if (!snap.exists()) {
+                    clearDeviceId();
+                    showChatStart();
+                    return;
+                }
+                showChatThread();
+                openChatThread(deviceId, toDate(snap.data().visitorReadAt));
+            })
+            .catch((error) => {
+                console.error('Failed to load conversation:', error.code, '-', error.message);
+                showChatStart();
+                let hint = 'Please try again.';
+                if (error.code === 'permission-denied') {
+                    hint = 'Check your Firestore Security Rules and database setup.';
+                }
+                showNotification('Could not load your conversation. ' + hint, 'error');
+            });
+    }
+
+    function startChat() {
+        const name = chatName.value.trim();
+        const email = chatEmail.value.trim();
+
+        if (!name || !email) {
+            showNotification('Please enter your name and email', 'error');
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            showNotification('Please enter a valid email address', 'error');
+            return;
+        }
+
+        const deviceId = getDeviceId() || createDeviceId();
+        const conversationRef = doc(db, 'conversations', deviceId);
+
+        chatStart.hidden = true;
+        chatPanel.hidden = true;
+        chatLoading.hidden = false;
+
+        getDoc(conversationRef)
+            .then((snap) => {
+                if (snap.exists()) {
+                    return setDoc(conversationRef, { name: name, email: email }, { merge: true });
+                }
+                return setDoc(conversationRef, {
+                    name: name,
+                    email: email,
+                    deviceId: deviceId,
+                    browser: getBrowser(),
+                    os: getOS(),
+                    createdAt: serverTimestamp()
+                });
+            })
+            .then(() => {
+                showChatThread();
+                openChatThread(deviceId, null);
+            })
+            .catch((error) => {
+                console.error('Failed to open conversation:', error.code, '-', error.message);
+                showChatStart();
+                let hint = 'Please try again.';
+                if (error.code === 'permission-denied') {
+                    hint = 'Check your Firestore Security Rules and database setup.';
+                }
+                showNotification('Something went wrong. ' + hint, 'error');
+            });
+    }
+
+    function toDate(value) {
+        if (!value) return null;
+        if (typeof value.toDate === 'function') return value.toDate();
+        if (typeof value.seconds === 'number') return new Date(value.seconds * 1000);
+        return value instanceof Date ? value : null;
+    }
+
+    const dateFormat = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const timeFormat = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' });
+
+    function formatDateKey(when) {
+        return when ? dateFormat.format(when) : '';
+    }
+
+    function formatTime(when) {
+        return when ? timeFormat.format(when) : '';
+    }
+
+    function renderDateDivider(when) {
+        const divider = document.createElement('div');
+        divider.className = 'chat-date-divider';
+        divider.textContent = formatDateKey(when);
+        return divider;
+    }
+
+    function renderChatMessage(text, isOwner, when) {
+        if (!text) return null;
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-bubble ' + (isOwner ? 'chat-bubble-owner' : 'chat-bubble-visitor');
+        if (when) {
+            bubble.dataset.ts = String(when.getTime());
+            bubble.dataset.dateKey = formatDateKey(when);
+        }
+
+        const body = document.createElement('span');
+        body.className = 'chat-bubble-text';
+        body.textContent = text;
+        bubble.appendChild(body);
+
+        if (when) {
+            const time = document.createElement('span');
+            time.className = 'chat-bubble-time';
+            time.textContent = formatTime(when);
+            bubble.appendChild(time);
+        }
+
+        return bubble;
+    }
+
+    if (chatStartBtn) {
+        chatStartBtn.addEventListener('click', startChat);
+    }
+
+    if (chatInputForm) {
+        chatInputForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const formData = new FormData(this);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const message = formData.get('message');
+            const text = chatInput.value.trim();
+            if (!text) return;
 
-            if (formData.get('website')) {
-                showNotification('Submission blocked.', 'error');
-                return;
-            }
+            const sendBtn = this.querySelector('button[type="submit"]');
+            sendBtn.disabled = true;
 
-            if (!name || !email || !message) {
-                showNotification('Please fill in all fields', 'error');
-                return;
-            }
-
-            if (!isValidEmail(email)) {
-                showNotification('Please enter a valid email address', 'error');
-                return;
-            }
-
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-
-            addDoc(collection(db, 'messages'), {
-                name: name.trim(),
-                email: email.trim().toLowerCase(),
-                message: message.trim(),
-                browser: getBrowser(),
-                os: getOS(),
-                deviceId: getDeviceId(),
-                createdAt: serverTimestamp(),
-                source: 'portfolio-contact-form'
+            addDoc(collection(db, 'conversations', getDeviceId(), 'messages'), {
+                text: text,
+                role: 'visitor',
+                createdAt: serverTimestamp()
             })
                 .then(() => {
-                    showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
-                    contactForm.reset();
+                    chatInput.value = '';
+                    scrollChatToBottom();
                 })
                 .catch((error) => {
-                    console.error('Firestore write failed:', error.code, '-', error.message);
+                    console.error('Send failed:', error.code, '-', error.message);
                     let hint = 'Please try again or email me directly.';
                     if (error.code === 'permission-denied') {
                         hint = 'Check your Firestore Security Rules and database setup.';
                     } else if (error.code === 'unavailable' || error.code === 'network-error') {
                         hint = 'Check your connection and the Firebase config in js/firebase-config.js.';
-                    } else if (error.code === 'invalid-argument') {
-                        hint = 'Submission failed validation. Check the form fields.';
                     }
-                    showNotification('Something went wrong. ' + hint, 'error');
+                    showNotification('Message not sent. ' + hint, 'error');
                 })
                 .finally(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
+                    sendBtn.disabled = false;
+                    chatInput.focus();
                 });
         });
     }
+
+    chatMessages.addEventListener('scroll', () => {
+        chatPinnedToBottom = chatMessages.scrollHeight - chatMessages.scrollTop - chatMessages.clientHeight < 60;
+    }, { passive: true });
 
     function isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -573,6 +906,8 @@ import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/fir
 
         updateActiveLink();
         document.body.classList.add('loaded');
+
+        initChat();
     });
 
 })();

@@ -1,32 +1,95 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /messages/{messageId} {
-      // Anyone may submit a contact message, but only with validated fields.
-      // Documents with any field outside this exact whitelist are rejected.
+
+    // Per-device chat conversation. The document path IS the visitor's
+    // unguessable deviceId (36-char UUID from localStorage), which acts as
+    // their capability token: only they can reach this thread. The UUID is
+    // random per browser, so paths cannot be enumerated or guessed.
+    match /conversations/{deviceId} {
+      // Visitors may read a single doc only if they know the exact ID.
+      // The site owner (authenticated user) may list all conversations.
+      allow get: if true;
+      allow list: if request.auth != null;
+
+      // Visitors may open a thread for the first time.
       allow create: if
-        request.resource.data.keys().hasOnly(['name', 'email', 'message', 'browser', 'os', 'deviceId', 'createdAt', 'source']) &&
+        request.resource.data.keys().hasOnly(['name', 'email', 'deviceId', 'browser', 'os', 'createdAt']) &&
+        deviceId.size() == 36 &&
         request.resource.data.name is string &&
         request.resource.data.name.size() > 0 &&
         request.resource.data.name.size() <= 100 &&
         request.resource.data.email is string &&
         request.resource.data.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$') &&
-        request.resource.data.message is string &&
-        request.resource.data.message.size() > 0 &&
-        request.resource.data.message.size() <= 2000 &&
+        request.resource.data.deviceId == deviceId &&
         request.resource.data.browser is string &&
-        request.resource.data.browser.size() <= 50 &&
+        request.resource.data.browser.size() <= 100 &&
         request.resource.data.os is string &&
-        request.resource.data.os.size() <= 50 &&
-        request.resource.data.deviceId is string &&
-        request.resource.data.deviceId.size() == 36 &&
+        request.resource.data.os.size() <= 100 &&
         request.resource.data.createdAt is timestamp &&
         request.resource.data.createdAt <= request.time + duration.value(60, 's');
 
-      // Only authenticated users (the site owner) may read/list messages.
-      allow read, list: if request.auth != null;
-      // Messages are immutable - no updates or deletes from clients.
-      allow update, delete: if false;
+      // Returning visitors may refresh their name/email on their own thread
+      // and advance their "read" marker. The site owner (authenticated) may
+      // advance their own "read" marker on any conversation.
+      // Note: for updates, keys() covers the WHOLE resulting document, so we
+      // check diff(resource).affectedKeys() to see only the fields written.
+      allow update: if
+        (resource.data.deviceId == deviceId &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'email', 'deviceId', 'browser', 'os', 'createdAt', 'visitorReadAt']) &&
+          request.resource.data.name is string &&
+          request.resource.data.name.size() > 0 &&
+          request.resource.data.name.size() <= 100 &&
+          request.resource.data.email is string &&
+          request.resource.data.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$') &&
+          request.resource.data.deviceId == deviceId &&
+          request.resource.data.browser is string &&
+          request.resource.data.browser.size() <= 100 &&
+          request.resource.data.os is string &&
+          request.resource.data.os.size() <= 100 &&
+          request.resource.data.createdAt is timestamp &&
+          request.resource.data.createdAt <= request.time + duration.value(60, 's') &&
+          (!('visitorReadAt' in request.resource.data) ||
+            (request.resource.data.visitorReadAt is timestamp &&
+              request.resource.data.visitorReadAt <= request.time + duration.value(60, 's'))))
+        ||
+        (request.auth != null &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['ownerReadAt']) &&
+          request.resource.data.ownerReadAt is timestamp &&
+          request.resource.data.ownerReadAt <= request.time + duration.value(60, 's'));
+
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        // Visitors (unauthenticated) may only write their own role; the site
+        // owner (authenticated) may write replies with role "owner".
+        allow create: if
+          (request.auth == null &&
+            get(/databases/$(database)/documents/conversations/$(deviceId)).data.deviceId == deviceId &&
+            request.resource.data.keys().hasOnly(['text', 'role', 'createdAt']) &&
+            request.resource.data.text is string &&
+            request.resource.data.text.size() > 0 &&
+            request.resource.data.text.size() <= 2000 &&
+            request.resource.data.role == 'visitor' &&
+            request.resource.data.createdAt is timestamp &&
+            request.resource.data.createdAt <= request.time + duration.value(60, 's'))
+          ||
+          (request.auth != null &&
+            request.resource.data.keys().hasOnly(['text', 'role', 'createdAt']) &&
+            request.resource.data.text is string &&
+            request.resource.data.text.size() > 0 &&
+            request.resource.data.text.size() <= 2000 &&
+            request.resource.data.role == 'owner' &&
+            request.resource.data.createdAt is timestamp &&
+            request.resource.data.createdAt <= request.time + duration.value(60, 's'));
+
+        // Visitors may read only their own thread; the owner may read any.
+        allow get, list: if
+          request.auth != null ||
+          get(/databases/$(database)/documents/conversations/$(deviceId)).data.deviceId == deviceId;
+
+        allow update, delete: if false;
+      }
     }
   }
 }

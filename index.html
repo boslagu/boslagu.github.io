@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Rommel Lagurin - Software Engineer specializing in backend development, fintech APIs, and Flutter mobile apps">
     <title>Rommel Lagurin | Software Engineer</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -351,27 +351,12 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                             linkedin.com/in/rommel-lagurin
                         </a>
+                        <a href="#" class="contact-item" id="contact-chat">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            Chat me here
+                        </a>
                         <!-- Add your GitHub link here if you have one -->
                     </div>
-                    <form class="contact-form" id="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <div class="form-honeypot" aria-hidden="true">
-                            <label for="website">Website</label>
-                            <input type="text" id="website" name="website" value="" tabindex="-1" autocomplete="off">
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
-                    </form>
                 </div>
             </div>
         </section>
@@ -383,6 +368,47 @@
         </div>
     </footer>
 
-    <script type="module" src="js/main.js"></script>
+    <button type="button" class="chat-launcher" id="chat-launcher" aria-label="Open chat" aria-expanded="false" aria-controls="chat-widget">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span class="chat-badge" id="chat-badge" hidden></span>
+    </button>
+
+    <aside class="chat-widget" id="chat-widget" hidden aria-label="Chat with Rommel">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <span class="chat-header-title">Chat with Rommel</span>
+                <span class="chat-header-status">Typically replies quickly</span>
+            </div>
+            <button type="button" class="chat-header-close" id="chat-close" aria-label="Close chat">&times;</button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-start" id="chat-start">
+                <p class="chat-hint">Start a conversation and I'll get back to you right here.</p>
+                <div class="form-group">
+                    <label for="chat-name">Name</label>
+                    <input type="text" id="chat-name" name="chat-name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="chat-email">Email</label>
+                    <input type="email" id="chat-email" name="chat-email" placeholder="you@example.com" required>
+                </div>
+                <button type="button" class="btn btn-primary btn-full" id="chat-start-btn">Continue</button>
+            </div>
+            <div class="chat-loading" id="chat-loading" hidden>
+                <div class="chat-spinner" aria-hidden="true"></div>
+                <p>Loading your conversation...</p>
+            </div>
+            <div class="chat-panel" id="chat-panel" hidden>
+                <div class="chat-messages" id="chat-messages" aria-live="polite">
+                </div>
+                <form class="chat-input-form" id="chat-input-form">
+                    <input type="text" id="chat-input" name="chat-message" placeholder="Type your message..." autocomplete="off" required>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        </div>
+    </aside>
+
+    <script type="module" src="js/main.js?v=4"></script>
 </body>
 </html>
