@@ -3,11 +3,382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My GitHub Page</title>
+    <meta name="description" content="Rommel Lagurin - Software Engineer specializing in backend development, fintech APIs, and Flutter mobile apps">
+    <title>Rommel Lagurin | Software Engineer</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Welcome to My Projects</h1>
-    <p><a href="resorts/">Visit Resorts</a></p>
-    <p><a href="profile/">Visit Profile</a></p>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">RL</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#architecture" class="nav-link">Architecture</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero" id="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <p class="hero-greeting">Hello, I'm</p>
+                    <h1 class="hero-name">Rommel Lagurin</h1>
+                    <h2 class="hero-title">Software Engineer</h2>
+                    <p class="hero-description">
+                        Backend developer building scalable financial services APIs with GoLang, Java, and Python,
+                        and cross-platform mobile apps with Flutter. I focus on clean architecture, reliability,
+                        and delivering real value to users.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#projects" class="btn btn-primary">View My Work</a>
+                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <pre class="code-content"><code><span class="keyword">func</span> <span class="function">main</span>() {
+    <span class="comment">// Financial services backend</span>
+    svc := <span class="function">NewService</span>(
+        <span class="function">WithDB</span>(<span class="string">"postgres"</span>),
+        <span class="function">WithCache</span>(<span class="function">Redis</span>()),
+        <span class="function">WithQueue</span>(<span class="function">Kafka</span>()),
+    )
+    <span class="function">RegisterAPI</span>(<span class="string">"/v1"</span>, svc)
+    svc.<span class="function">Serve</span>()
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section about" id="about">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-grid">
+                    <div class="about-content">
+                        <p>
+                            I'm a software engineer with over 5 years of experience developing production systems,
+                            primarily in the financial services industry. My work spans building scalable REST APIs,
+                            reconciliation services, SMS gateways, QR payment integrations, and authentication services
+                            using GoLang, Java, and Python.
+                        </p>
+                        <p>
+                            Beyond the backend, I've built cross-platform mobile applications with Flutter and led
+                            development teams as a backend team leader. I believe in writing clean, maintainable code,
+                            and I'm driven by the goal of contributing to products that solve real problems.
+                        </p>
+                        <div class="about-stats">
+                            <div class="stat">
+                                <span class="stat-number">5+</span>
+                                <span class="stat-label">Years Experience</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">14+</span>
+                                <span class="stat-label">Projects Delivered</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">10+</span>
+                                <span class="stat-label">APIs Built</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-highlights">
+                        <div class="highlight-card">
+                            <div class="highlight-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                            </div>
+                            <h3>Backend Development</h3>
+                            <p>Building scalable APIs and services with GoLang, Java, and Python</p>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                            </div>
+                            <h3>Mobile Development</h3>
+                            <p>Cross-platform mobile apps with Flutter/Dart</p>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            </div>
+                            <h3>System Architecture</h3>
+                            <p>Designing scalable, maintainable systems with event-driven patterns</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section experience" id="experience">
+            <div class="container">
+                <h2 class="section-title">Experience</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-period">OCT 2024 &mdash; PRESENT</div>
+                            <h3 class="timeline-role">Software Engineer</h3>
+                            <div class="timeline-company">Axos Business Center</div>
+                            <p class="timeline-description">
+                                Collaborate with analysts to design solutions and translate requirements into APIs
+                                and services. Coordinate with frontend and QA teams to resolve issues and implement
+                                enhancements. Develop scalable APIs that meet standards.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-period">SEP 2022 &mdash; MAY 2024</div>
+                            <h3 class="timeline-role">Developer 2</h3>
+                            <div class="timeline-company">FDS ASYA PHILIPPINES INC.</div>
+                            <p class="timeline-description">
+                                Led and managed the development team, translating client business requirements into
+                                APIs and applications across GoLang, Java, Python, and Flutter for mobile and web
+                                platforms &mdash; designing a microservices architecture implemented in konek2CARD PLUS.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-period">JUN 2022 &mdash; SEP 2022</div>
+                            <h3 class="timeline-role">Developer 1 / Backend Team Leader</h3>
+                            <div class="timeline-company">FDS ASYA PHILIPPINES INC.</div>
+                            <p class="timeline-description">
+                                Debugged GoLang, Java, and Python backend services to resolve errors, and updated Flutter
+                                mobile applications to ensure compatibility. Developed and enhanced reconciliation backend
+                                services using GoLang and PostgreSQL to ensure accurate data correction and analysis for
+                                clients, while managing the backend team.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-period">FEB 2021 &mdash; JUN 2022</div>
+                            <h3 class="timeline-role">Developer</h3>
+                            <div class="timeline-company">FDS ASYA PHILIPPINES INC.</div>
+                            <p class="timeline-description">
+                                Worked as a Mobile Developer using Flutter/Dart, building client-focused apps, fixing bugs,
+                                coordinating with testers, and deploying via Git automation for quality delivery.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-period">NOV 2018 &mdash; JAN 2020</div>
+                            <h3 class="timeline-role">IT Lecturer</h3>
+                            <div class="timeline-company">Informatics College Northgate</div>
+                            <p class="timeline-description">
+                                Taught programming to SHS and college students, sharing knowledge and experience to
+                                strengthen their logic and technical skills through curriculum-based instruction.
+                                Handled adviser responsibilities including class management and performance evaluation.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="certifications">
+                    <h3 class="certifications-title">Certifications</h3>
+                    <ul class="certifications-list">
+                        <li class="cert-item">
+                            <span class="cert-name">DevSecOps</span>
+                            <span class="cert-org">DevSecOps Academe &middot; 2022</span>
+                        </li>
+                        <li class="cert-item">
+                            <span class="cert-name">Microsoft Innovative Educator</span>
+                            <span class="cert-org">Microsoft &middot; 2018</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section skills" id="skills">
+            <div class="container">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Languages</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">GoLang</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">Dart</span>
+                            <span class="skill-tag">SQL</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Mobile</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Flutter</span>
+                            <span class="skill-tag">Dart</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Databases</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">MSSQL</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Caching &amp; Messaging</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Redis</span>
+                            <span class="skill-tag">Kafka</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">DevOps &amp; Tools</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">Git</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">API &amp; Architecture</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">REST APIs</span>
+                            <span class="skill-tag">Event-Driven</span>
+                            <span class="skill-tag">Microservices</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section projects" id="projects">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+                <p class="section-subtitle">
+                    Production systems built for internal and client projects. Access is restricted for confidentiality.
+                </p>
+                <div class="project-filters" id="project-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="backend">Backend &amp; APIs</button>
+                    <button class="filter-btn" data-filter="mobile">Mobile Apps</button>
+                    <button class="filter-btn" data-filter="web">Web Apps</button>
+                </div>
+                <div class="projects-grid" id="projects-grid"></div>
+            </div>
+        </section>
+
+        <section class="section architecture" id="architecture">
+            <div class="container">
+                <h2 class="section-title">Architecture</h2>
+                <p class="section-subtitle">Design patterns I apply to build scalable, maintainable systems</p>
+                <div class="architecture-grid">
+                    <div class="arch-card">
+                        <div class="arch-diagram">
+                            <div class="arch-node client">Client</div>
+                            <div class="arch-arrow">→</div>
+                            <div class="arch-node gateway">API Gateway</div>
+                            <div class="arch-arrow">→</div>
+                            <div class="arch-nodes">
+                                <div class="arch-node service">Auth Service</div>
+                                <div class="arch-node service">Payments Service</div>
+                                <div class="arch-node service">Notification Service</div>
+                            </div>
+                        </div>
+                        <h3>Event-Driven Microservices</h3>
+                        <p>Financial services decomposed into services communicating asynchronously via Kafka</p>
+                        <div class="arch-tech">
+                            <span>Go</span>
+                            <span>Kafka</span>
+                            <span>Redis</span>
+                            <span>PostgreSQL</span>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-diagram">
+                            <div class="arch-node client">Mobile App</div>
+                            <div class="arch-arrow">→</div>
+                            <div class="arch-node gateway">Load Balancer</div>
+                            <div class="arch-arrow">→</div>
+                            <div class="arch-nodes">
+                                <div class="arch-node service">API Layer</div>
+                                <div class="arch-arrow">→</div>
+                                <div class="arch-node service">Cache</div>
+                                <div class="arch-arrow">→</div>
+                                <div class="arch-node service">Database</div>
+                            </div>
+                        </div>
+                        <h3>Layered API Architecture</h3>
+                        <p>High-performance backend with caching strategy and clean separation of concerns</p>
+                        <div class="arch-tech">
+                            <span>PostgreSQL</span>
+                            <span>Redis</span>
+                            <span>Docker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section contact" id="contact">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">I'm always open to discussing new projects and opportunities</p>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <a href="mailto:m.rommellagurin@gmail.com" class="contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            m.rommellagurin@gmail.com
+                        </a>
+                        <a href="tel:+639608496033" class="contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            +63 960 849 6033
+                        </a>
+                        <a href="https://www.linkedin.com/in/rommel-lagurin-0186b3160/" class="contact-item" target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            linkedin.com/in/rommel-lagurin
+                        </a>
+                        <!-- Add your GitHub link here if you have one -->
+                    </div>
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Rommel Lagurin. Built with clean code and attention to detail.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
